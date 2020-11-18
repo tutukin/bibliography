@@ -1,0 +1,37 @@
+{
+  "name": "bibliography",
+  "version": "0.0.1",
+  "description": "Obsidian plugin that resolves a publication ID to a bibliographic description.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --config build/rollup.config.js && node build/createManifest.js && build\\deploy.cmd"
+  },
+  "keywords": [
+    "obsidian",
+    "isbn",
+    "bibliography"
+  ],
+  "author": "Andrey V. Toutoukine",
+  "homepage": "https://github.com/tutukin/bibliography",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@rollup/plugin-typescript": "^6.1.0",
+    "@types/node": "^14.14.7",
+    "obsidian": "https://github.com/obsidianmd/obsidian-api/tarball/master",
+    "rollup": "^2.33.2",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "node-isbn": "^1.6.0"
+  },
+  "manifest": {
+      "minAppVersion": "0.9.12",
+      "isDesktopOnly": true
+  }
+}
