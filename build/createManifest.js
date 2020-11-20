@@ -1,28 +1,21 @@
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
+const packageJson = require('../package.json');
 
-import rollupConfig from './rollup.config.js';
-
-const packageJson = getPackageJson();
-
-const manifestFn = path.resolve(rollupConfig.output.dir, 'manifest.json');
+const pluginSettings = packageJson['obsidian-bibliography'];
+const manifestFn = path.resolve(pluginSettings.outputDir, 'manifest.json');
 
 const manifest = {
     "id": `obsidian-${packageJson.name}`,
 	"name": `${packageJson.name}`,
 	"version": packageJson.version,
-	"minAppVersion": packageJson.manifest.minAppVersion,
+	"minAppVersion": pluginSettings.minAppVersion,
 	"description": packageJson.description,
 	"author": packageJson.author,
 	"authorUrl": packageJson.homepage,
-	"isDesktopOnly": packageJson.manifest.isDesktopOnly
+	"isDesktopOnly": pluginSettings.isDesktopOnly
 };
 
 fs.writeFileSync(manifestFn, JSON.stringify(manifest, null, 4), 'utf8');
-
-function getPackageJson() {
-    const content = fs.readFileSync('package.json', 'utf8');
-    return JSON.parse(content);
-}

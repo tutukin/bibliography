@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { name } from '../package.json';
+import { name } from '../../package.json';
 import SearchModal from './searchModal';
 import SearchService from './searchService';
 

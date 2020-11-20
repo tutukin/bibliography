@@ -20,8 +20,8 @@ export default class SearchModal extends Modal {
         
         let searchButton = new ButtonComponent(contentEl)
             .setButtonText('Search')
-            .onClick(() => {
-                this.searchResult = this.searchService.search(textComponent.getValue());
+            .onClick(async () => {
+                this.searchResult = await this.searchService.search(textComponent.getValue());
                 searchResultEl.textContent = this.searchResult.description;
             });
 
