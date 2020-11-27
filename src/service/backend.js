@@ -17,8 +17,7 @@ fastify.route({
             200: {
                 type: 'object',
                 properties: {
-                    key: { type: 'string' },
-                    description: { type: 'string' }
+                    bibtex: { type: 'string' }
                 }
             }
         }

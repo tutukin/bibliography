@@ -1,5 +1,6 @@
 const isbn = require('node-isbn');
 const { validate } = require('isbn-util');
+const Converter = require('./bibtex');
 
 const self  = module.exports = {
     search: async (id) => {
@@ -8,39 +9,11 @@ const self  = module.exports = {
         }
         
         const response = await isbn.resolve(id);
-        
-        return {
-            key: self.getKey(response),
-            description: self.getDescription(response)
-        };
-    },
-
-    getKey(response) {
-        const firstAuthor = !!response.authors && response.authors.length > 0 ?
-            response.authors[0].split(/\s+/g).pop() :
-            'NoAuthor';
-        
-        const year = !!response.publishedDate ?
-            response.publishedDate :
-            'NoDate';
-        
-        return `${firstAuthor}${year}`;
-    },
-
-    getDescription(response) {
-        let description = [];
-
-        if (!!response.authors && response.authors.length > 0) {
-            description.push(`${response.authors[0]}.`);
+        const bibtex = new Converter().fromGoogleBook(response);
+        const validationErrors = bibtex.validate();
+        if (validationErrors.length > 0) {
+            throw Error(`Invalid description is retrieved: ${validationErrors.join('; ')}`);
         }
-
-        const title = !!response.title ? response.title : 'Untitled';
-        description.push(`${title}.`);
-
-        if (!!response.publishedDate) {
-            description.push(response.publishedDate);
-        }
-
-        return description.join(' ');
+        return { bibtex: bibtex.toString() };
     }
 };
